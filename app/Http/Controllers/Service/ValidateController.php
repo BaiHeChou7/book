@@ -49,6 +49,7 @@ class ValidateController extends Controller
     if($yz_result->status == 0) {
       $tempPhone = TempPhone::where('phone', $phone)->first();
       if($tempPhone == null) {
+          // 如果该手机号没有被注册过 再new
         $tempPhone = new TempPhone;
       }
       $tempPhone->phone = $phone;

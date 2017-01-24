@@ -20,7 +20,7 @@ Route::get('/register', 'View\MemberController@toRegister');
 
 Route::any('service/validate_code/create', 'Service\ValidateController@create');
 Route::any('service/validate_phone/send', 'Service\ValidateController@sendSMS');
-Route::any('service/register', 'Service\MemberController@register');
+Route::post('service/register', 'Service\MemberController@register');
 /*
 |--------------------------------------------------------------------------
 | Application Routes
