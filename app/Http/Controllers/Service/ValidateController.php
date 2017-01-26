@@ -60,7 +60,7 @@ class ValidateController extends Controller
 
     return $yz_result->toJson();
   }
-
+  // 验证邮箱
   public function validateEmail(Request $request)
   {
     $member_id = $request->input('member_id', '');

@@ -141,3 +141,43 @@ response body = <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     </TemplateSMS>
 </Response>
 
+request body = <TemplateSMS>
+                    <to>18336327877</to>
+                    <appId>8aaf070859b4c9930159cac11aea06d6</appId>
+                    <templateId>1</templateId>
+                    <datas><data>064977</data><data>60</data></datas>
+                  </TemplateSMS>
+request url = https://app.cloopen.com:8883/2013-12-26/Accounts/8aaf070859b4c9930159cac1188406d0/SMS/TemplateSMS?sig=B703F0CE75474F85DBC1B9FAFD53679C
+response body = <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Response>
+    <statusCode>000000</statusCode>
+    <TemplateSMS>
+        <smsMessageSid>4bbbf16e01e34bcd84a359b62476e080</smsMessageSid>
+        <dateCreated>20170125131414</dateCreated>
+    </TemplateSMS>
+</Response>
+
+request body = <TemplateSMS>
+                    <to>18336327877</to>
+                    <appId>8aaf070859b4c9930159cac11aea06d6</appId>
+                    <templateId>1</templateId>
+                    <datas><data>148764</data><data>60</data></datas>
+                  </TemplateSMS>
+request url = https://app.cloopen.com:8883/2013-12-26/Accounts/8aaf070859b4c9930159cac1188406d0/SMS/TemplateSMS?sig=5A3BF9B28AE3BC939A4B1D580F88DEB5
+response body = <?xml version="1.0" encoding="UTF-8" standalone="yes"?><Response><statusCode>172001</statusCode><statusMsg>网络错误</statusMsg></Response>
+request body = <TemplateSMS>
+                    <to>18336327877</to>
+                    <appId>8aaf070859b4c9930159cac11aea06d6</appId>
+                    <templateId>1</templateId>
+                    <datas><data>494368</data><data>60</data></datas>
+                  </TemplateSMS>
+request url = https://app.cloopen.com:8883/2013-12-26/Accounts/8aaf070859b4c9930159cac1188406d0/SMS/TemplateSMS?sig=FA81F2B21239A50DE52D8D7AAE5AD36F
+response body = <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Response>
+    <statusCode>000000</statusCode>
+    <TemplateSMS>
+        <smsMessageSid>44ef4f132c4b4dc491466f84d6178026</smsMessageSid>
+        <dateCreated>20170125134429</dateCreated>
+    </TemplateSMS>
+</Response>
+

@@ -9,16 +9,18 @@
 </head>
 <body>
 
+<div class="bk_title_bar">
+    <img class="bk_back" src="/images/back.png" onclick="history.go(-1)">
+<p class="bk_title_content"></p>
+<img class="bk_menu" src="/images/menu.png" onclick="onMenuClick();">
+</div>
+
 <div class="page">
   @yield('content')
 </div>
 
 <!-- tooltips -->
 <div class="bk_toptips"><span></span></div>
-
-<div id="global_menu" onclick="onMenuClick();">
-  <div></div>
-</div>
 
 <!--BEGIN actionSheet-->
 <div id="actionSheet_wrap">
@@ -78,6 +80,8 @@ function onMenuItemClick(index) {
     setTimeout(function() {$('.bk_toptips').hide();}, 2000);
   }
 }
+// 将每个页面的标题和title保持一致
+$('.bk_title_content').html(document.title);
 </script>
 
 @yield('my-js')

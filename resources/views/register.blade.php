@@ -154,8 +154,9 @@
     $.ajax({
       url: '/service/validate_phone/send',
       dataType: 'json',
+      type:'POST',
       cache: false,
-      data: {phone: phone},
+      data: {phone: phone, _token: "{{csrf_token()}}"},
       success: function(data) {
         if(data == null) {
           $('.bk_toptips').show();
@@ -238,6 +239,7 @@
             $('.bk_toptips').show();
             $('.bk_toptips span').html('注册成功');
             setTimeout(function() {$('.bk_toptips').hide();}, 2000);
+       
           },
           error: function(xhr, status, error) {
             console.log(xhr);
