@@ -50,6 +50,34 @@
       $(this).next().addClass('weui_icon_checked');
     }
   });
+  
+      function _toCharge() {
+        var product_ids_arr = [];
+        $('input:checkbox[name=cart_item]').each(function(index, el) {
+          if($(this).attr('checked') == 'checked') {
+            product_ids_arr.push($(this).attr('id'));
+          }
+        });
+
+        if(product_ids_arr.length == 0) {
+          $('.bk_toptips').show();
+          $('.bk_toptips span').html('请选择提交项');
+          setTimeout(function() {$('.bk_toptips').hide();}, 2000);
+          return;
+        }
+
+        // 如果是微信浏览器
+        var is_wx = 0;
+        var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+          is_wx = 1;
+        }
+
+        location.href = '/order_commit/' + product_ids_arr;
+        // $('input[name=product_ids]').val(product_ids_arr+'');
+        // $('input[name=is_wx]').val(is_wx+'');
+        // $('#order_commit').submit();
+  }
     
     function _onDelete() {
     var product_ids_arr = [];

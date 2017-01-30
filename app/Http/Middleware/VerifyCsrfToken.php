@@ -12,6 +12,8 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        //
+        //不需要中间件验证的地址
+        '/service/pay/ali_notify',
+        '/service/pay/wx_notify',
     ];
 }

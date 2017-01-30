@@ -5,11 +5,43 @@ namespace App\Http\Controllers\Service;
 use App\Http\Controllers\Controller;
 use App\Models\YzResult;
 use Illuminate\Http\Request;
+use App\Entity\CartItem;
 
 class CartController extends Controller {
 
     public function addCart(Request $request, $product_id) {
-        // 从cookie中获取购物车的值
+
+        $yz_result = new YzResult;
+        $yz_result->status = 0;
+        $yz_result->message = '添加成功';
+
+        // 如果当前已经登录
+        $member = $request->session()->get('member', '');
+        if ($member != '') {
+            $cart_items = CartItem::where('member_id', $member->id)->get();
+
+            $exist = false;
+            foreach ($cart_items as $cart_item) {
+                if ($cart_item->product_id == $product_id) {
+                    $cart_item->count ++;
+                    $cart_item->save();
+                    $exist = true;
+                    break;
+                }
+            }
+
+            if ($exist == false) {
+                $cart_item = new CartItem;
+                $cart_item->product_id = $product_id;
+                $cart_item->count = 1;
+                $cart_item->member_id = $member->id;
+                $cart_item->save();
+            }
+
+            return $yz_result->toJson();
+        }
+
+        // 未登录,则从cookie中获取购物车的值
         $bk_cart = $request->cookie('bk_cart');
 //        return $bk_cart;
         // 如果内容不为空,拆分字符串
@@ -29,37 +61,50 @@ class CartController extends Controller {
         if ($count == 1) {
             array_push($bk_cart_arr, $product_id . ':' . $count);
         }
-        $yz_result = new YzResult;
-        $yz_result->status = 0;
-        $yz_result->message = '添加成功';
 
         return response($yz_result->toJson())->withCookie('bk_cart', implode(',', $bk_cart_arr));
     }
 
     public function deleteCart(Request $request) {
         $yz_result = new YzResult;
+        $yz_result->status = 0;
+        $yz_result->message = '删除成功';
 
-        $request_ids = $request->input('product_ids', '');
-        if ($request_ids == '') {
+        $product_ids = $request->input('product_ids', '');
+        if ($product_ids == '') {
             $yz_result->status = 1;
-            $yz_result->message = '书籍id为空';
-            return $yz_result;
+            $yz_result->message = '书籍ID为空';
+            return $yz_result->toJson();
+        }
+        $product_ids_arr = explode(',', $product_ids);
+
+        $member = $request->session()->get('member', '');
+        if ($member != '') {
+            // 已登录
+            CartItem::whereIn('product_id', $product_ids_arr)->delete();
+            return $yz_result->toJson();
         }
 
-        $request_ids_arr = explode(',', $request_ids);
+        $product_ids = $request->input('product_ids', '');
+        if ($product_ids == '') {
+            $yz_result->status = 1;
+            $yz_result->message = '书籍ID为空';
+            return $yz_result->toJson();
+        }
+
+        // 未登录
         $bk_cart = $request->cookie('bk_cart');
         $bk_cart_arr = ($bk_cart != null ? explode(',', $bk_cart) : array());
         foreach ($bk_cart_arr as $key => $value) {
             $index = strpos($value, ':');
             $product_id = substr($value, 0, $index);
-            // 判断产品id是否存在购物车,存在即删除
-            if (in_array($product_id, $request_ids_arr)) {
+            // 存在, 删除
+            if (in_array($product_id, $product_ids_arr)) {
                 array_splice($bk_cart_arr, $key, 1);
                 continue;
             }
         }
-        $yz_result->status = 0;
-        $yz_result->message = '删除成功';
+
         return response($yz_result->toJson())->withCookie('bk_cart', implode(',', $bk_cart_arr));
     }
 

@@ -160,7 +160,9 @@ class MemberController extends Controller {
                 return $yz_result->toJson();
             }
         }
-        $request->session()->put('memeber',$member);
+        
+        $request->session()->put('member', $member);
+        
         $yz_result->status = 0;
         $yz_result->message = '登录成功';
         return $yz_result->toJson();
